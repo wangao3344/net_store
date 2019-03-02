@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+
+
+
+
+
+
+            <div class="panel panel-default">              
+			    <div class="panel-heading">
+                  角色授权
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive input-form">
+                        <form action="/admin/role/doAuthor" method="post">
+                            <input type="hidden"name="_csrf" value='{{@csrf}}'>
+                            <input type="hidden"name="role_id" value='{{@id}}'>
+                            {{each list}}
+                            <tr>
+                                <td align="right" style="background: #D8E2FA; padding-right: 10px; width: 150px;">
+                                    <label>
+                                        <input type="checkbox" class="module_cbo" name="access_node[]" value="{{@$value._id}}" {{if $value.checked}}checked{{/if}}>
+                                        {{$value.module_name}}
+                                    </label>
+                                    &nbsp;&nbsp;
+                                </td>
+                                        {{each $value.items}}
+                                <td>
+                                    <label>
+                                        <input type="checkbox" class="module_cbo" name="access_node[]" value="{{@$value._id}}" {{if $value.checked}}checked{{/if}}>
+                                        {{$value.action_name}}
+                                    </label>
+                                    &nbsp;&nbsp;
+                                </td>
+                                    {{/each}}
+                            </tr>
+                                  <br>
+                            {{/each}}
+                            <br>
+                            <button type="submit" class="btn btn-primary" style="margin-bottom: 0px">提交</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+</body>
+</html>

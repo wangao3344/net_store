@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+    <!-- 符文本编辑器. -->
+    <link href="/public/admin/wysiwyg-editor/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css" />
+    <!-- Include Editor style. -->
+    <link href="/public/admin/wysiwyg-editor/css/froala_editor.pkgd.min.css"
+          rel="stylesheet" type="text/css" />
+    <link href="/public/admin/wysiwyg-editor/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript"src="/public/admin/wysiwyg-editor/js/froala_editor.pkgd.min.js"></script>
+    <script src="/public/admin/wysiwyg-editor/js/zh_cn.js"></script>
+    <!--百度upload图片批量上传-->
+    <link href="/public/admin/imgUpload/css/diyUpload.css"
+          rel="stylesheet" type="text/css" />
+    <link href="/public/admin/imgUpload/css/webuploader.css"
+          rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/public/admin/imgUpload/js/diyUpload.js"></script>
+    <script type="text/javascript" src="/public/admin/imgUpload/js/webuploader.html5only.min.js"></script>
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        修改商品
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive input-form">
+            <form action="/admin/goods/doEdit?_csrf={{@csrf}}" method="post"
+                  enctype="multipart/form-data" class="goods_content">
+                <input type="hidden" name="gid" value="{{@goods._id}}">
+                <input type="hidden" name="pre_page" value="{{pre_page}}">
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#general" role="tab"
+                                                                  data-toggle="tab">通用信息</a></li>
+                        <li role="presentation"><a href="#detail" role="tab"
+                                                   data-toggle="tab">详细描述</a></li>
+                        <li role="presentation"><a href="#mix" role="tab" data-toggle="tab">其他信息</a>
+                        </li>
+                        <li role="presentation"><a href="#attribute" role="tab" data-toggle="tab">规格与包装</a>
+                        </li>
+                        <li role="presentation"><a href="#photo" role="tab"
+                                                   data-toggle="tab">商品相册</a></li>
+
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="general">
+                            <ul class="form_input">
+                                <li>
+                                    <span> 商品标题:</span> <input type="text" name="title" class="input" value="{{goods.title}}"/>
+                                </li>
+                                <li>
+                                    <span> 附属标题:</span> <input type="text" name="sub_title" class="input" value="{{goods.sub_title}}"/>
+                                </li>
+                                <li>
+                                    <span>商品版本:</span> <input type="text" name="goods_version" class="input" value="{{goods.goods_version}}"/>
+                                </li>
+                                <li>
+                                    <span>所属分类:</span> <select name="cate_id" id="cate_id">
+                                       {{each cate}}
+                                    <option value="{{@$value._id}}" {{if goods.cate_id.toString()==($value._id.toString())}}selected{{/if}}>---{{@$value.title}}</option>
+                                    {{each $value.items}}
+                                    <option value="{{@$value._id}}" {{if goods.cate_id.toString()==($value._id.toString())}}selected{{/if}}>{{@$value.title}}</option>
+                                    {{/each}}
+
+                                       {{/each}}
+
+                                </select>
+
+                                    <input type="hidden" name="cname" id="cname"/>
+
+                                </li>
+                                {{if goods.goods_img}}<li>原图片:<img class="pic" src="{{goods.goods_img}}"></li>{{/if}}
+                                <li><span> 商品图片:</span> <input type="file" name="goods_img"/></li>
+                                <li><span>商品价格:</span> <input type="text" name="shop_price" value="{{goods.shop_price}}"/></li>
+                                <li><span>商品原价:</span> <input type="text" name="market_price" value="{{goods.market_price}}"/></li>
+
+                                <li><span>商品状态:</span>　<input type="radio" value="1" name="status"  {{if goods.status==1}}checked{{/if}}/> 显示 　
+                                    <input type="radio" value="0" name="status" {{if goods.status==0}}checked{{/if}}/> 隐藏
+                                </li>
+
+                                <li><span>加入推荐:</span>　<input type="checkbox" value="1" name="is_best" {{if goods.is_best==1}}checked{{/if}}/>精品
+                                    <input type="checkbox" value="1" name="is_hot" {{if goods.is_hot==1}}checked{{/if}}/> 热销
+                                    <input type="checkbox" value="1" name="is_new" {{if goods.is_news==1}}checked{{/if}}/> 新品
+                                </li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="detail">
+                            <textarea name="goods_content" id="content" cols="100" rows="8">{{goods.goods_content}}</textarea>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="mix">
+                            <ul class="form_input">
+
+                                <li> <span>商品颜色:</span>
+
+                                    {{if list}}{{each list}}
+                                    <!--提交的数据是集合类型时，如果使用二进制流来提交的话，我们就不需要[]-->
+                                    <input type="checkbox" name="goods_color" value="{{@$value._id}}" id="color_{{@$value._id}}" {{if goods.goods_color.toString().indexOf($value._id.toString())!=-1}}checked{{/if}}/> <label for="color_{{@$value._id}}">{{$value.color_name}}</label>
+                                    {{/each}}
+                                    {{/if}}
+
+
+                                </li>
+
+
+                                <li> <span>关联商品:</span>
+
+                                    <input type="text" name="relation_goods" class="relation_goods" value="{{goods.relation_goods}}"/>  <i>填写关联商品的id 多个以逗号隔开 格式：23,24,39</i>
+
+                                </li>
+
+
+                                <li> <span>关联赠品:</span>
+
+                                    <input type="text" name="goods_gift" class="goods_gift" value="{{goods.goods_gift}}" />  <i>可为空 格式：23-2,39-5 说明：例如23-2 中的23表示商品id,2表示商品数量</i>
+
+                                </li>
+                                <li> <span>关联配件:</span>
+
+                                    <input type="text" name="goods_fitting" class="goods_fitting" value="{{goods.goods_fitting}}"/>  <i>可为空 格式：23-2,39-5 说明：例如23-2 中的23表示商品id,2表示商品数量</i>
+
+                                </li>
+
+
+                                <li> <span>更多属性:</span>
+
+                                <input type="text" name="goods_attr" class="goods_attr" value="{{goods.goods_attr}}"/>  <i> 格式:  颜色:红色,白色,黄色 | 尺寸:41,42,43</i>
+
+                            </li>
+                                <li> <span>Seo关键词:</span>
+
+                                    <input type="text" name="goods_keywords" id="goods_keywords" value="{{goods.goods_keywords}}"/>
+
+                                </li>
+                                <li> <span>Seo描述:</span>
+
+                                    <textarea type="text" name="goods_desc" id="goods_desc" rows="2" cols="100">{{goods.goods_desc}}</textarea>
+
+                                </li>
+
+
+
+
+
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="attribute">
+                            <ul class="form_input">
+
+                                <li> <span>商品类型:　</span>
+
+                                    <select name="goods_type_id" id="goods_type_id">
+
+                                        <option value="0">--请选择商品类型--</option>
+
+                                        {{each type}}
+                                        <option value="{{@$value._id}}"{{if goods.goods_type_id.toString()==$value._id.toString()}}selected{{/if}}>{{$value.title}}</option>
+                                        {{/each}}
+
+                                    </select>
+
+                                </li>
+
+
+
+                            </ul>
+                            <ul class="form_input" id="goods_type_attribute">
+                                <!--输出html 标签-->
+                                    {{@ attr}}
+
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="photo">
+                            <div id="goods_image">
+                                <ul id="goods_image_list" class="goods_image_list clear">
+
+                                    {{each imgList  imgValue}}
+                                    <li>
+                                        <img class="pic" src="{{imgValue.img_url}}" />
+
+                                        <div class="color_list">
+                                            <!--自定义属性-->
+                                            {{if color_arr}} <select name="color_id" class="relation_goods_color" goods_img_id="{{@imgValue._id}}">
+
+                                               {{each color_arr}}
+                                                <option value="{{@$value._id}}" {{if $value._id.toString()==imgValue.color_id.toString()}} selected{{/if}}>{{$value.color_name}}</option>
+                                                {{/each}}
+
+                                            </select>
+                                            {{/if}}
+                                        </div>
+                                        <!--删除按钮-->
+                                        <div class="goods_image_delete" goods_image_id="{{@ imgValue._id}}"></div>
+                                    </li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                            <div id="photoLib"  class="photoLib"></div>
+
+
+                            <div id="photoList"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <input type="hidden" name="_csrf" value="{{@csrf}}">
+
+                <button type="submit" class="btn btn-success goods_content_btn">提交</button>
+
+            </form>
+        </div>
+    </div>
+
+
+</div>
+<!-- 缓存当前的属性信息 隐藏-->
+<div id="goods_attr_value" style="display:none">
+
+    {{@attr}}
+</div>
+<script>
+    $(function () {
+        $('#goods_type_id').change(function () {
+            var cid=$(this).val();
+            if(cid=='{{goods.goods_type_id.toString()}}'){
+                $('#goods_type_attribute').html($('#goods_attr_value').html());
+            }else{
+                $.get('/admin/goods/goodsTypeAttribute',{cid:cid},function (res) {
+                    var data=res.result;
+                    var str="";
+                    for(var i=0;i<data.length;i++){
+
+                        if(data[i].attr_type==1){
+
+                            str+='<li><span>'+data[i].title+': 　</span><input type="hidden" name="attr_id_list" value="'+data[i]._id+'" />  <input type="text" name="attr_value_list" /></li>'
+                        }else if(data[i].attr_type==2){
+                            str+='<li><span>'+data[i].title+': 　</span> <input type="hidden" name="attr_id_list" value="'+data[i]._id+'">  <textarea cols="50" rows="3" name="attr_value_list"></textarea></li>'
+                        }else{
+                            var arr=data[i].attr_value.split('\n');
+
+
+                            str+='<li><span>'+data[i].title+': 　</span><input type="hidden" name="attr_id_list" value="'+data[i]._id+'">';
+
+                            str+='<select name="attr_value_list">';
+
+                            for(var j=0;j<arr.length;j++){
+
+                                str+='<option value="'+arr[j]+'">'+arr[j]+'</option>';
+                            }
+                            str+='</select>';
+                            str+='</li>';
+
+
+
+                        }
+
+                    }
+                    $('#goods_type_attribute').html(str);
+
+
+                });
+            }
+            //alert(id);
+
+        });
+
+    });
+</script>
+<!-- Initialize the editor. -->
+<script>
+    $(function() {
+        $('#content').froalaEditor({
+            height:300,
+            language: 'zh_cn',
+            //工具栏图标
+            toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink',
+                'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
+            //上传图片的url
+            imageUploadURL: '/admin/goods/uploadImg',
+        });
+    }),
+    //图片的批量上传
+    $(function(){
+
+        var photoStr='';
+        $('#photoLib').diyUpload({
+            url:'/admin/goods/goodsUploadPhoto',
+            success:function( response ) {
+                // console.info( data );图片上传成功后，图片信息，保存在input中
+                photoStr='<input type="hidden" name="goods_image_list" value='+response.link+' />';
+                //保存图片信息放在隐藏的input中
+                $('#photoList').append(photoStr);
+            },
+            error:function( err ) {
+                console.info( err );
+            }
+        })});
+</script>
+<script>
+    $(function () {
+        $('.relation_goods_color').change(function () {
+            var color_id = $(this).val();
+            var img_id=$(this).attr('goods_img_id');
+            //进行ajax请求
+            $.post('/admin/goods/changePhotosColor?_csrf={{@csrf}}',{color_id:color_id,img_id:img_id},function (res) {
+                console.log(res);
+            });
+
+        });
+        $('.goods_image_delete').click(function () {
+            var tag= confirm('确定要删除吗?');
+            if(tag){
+                var that = $(this);
+                var img_id = that.attr('goods_image_id');
+                // alert(img_id);
+                $.post('/admin/goods/deletePhoto?_csrf={{@csrf}}',{img_id:img_id},function (res) {
+                    if(res.flag){
+                        //删除父控件
+                        that.parent().remove()
+                    }
+                });
+            }
+
+        });
+
+    });
+</script>
+
+</body>
+</html>

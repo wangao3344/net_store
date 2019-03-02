@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+    <script type="text/javascript" src="/public/admin/js/jqPaginator.js"></script>
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+
+    <!--
+                列表展示
+            -->
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr class="th">
+                        <th>导航名称</th>
+                        <th>关联商品</th>
+                        <th>跳转地址</th>
+                        <th>位置</th>
+                        <th class="text-center">打开方式</th>
+                        <th class="text-center">排序</th>
+                        <th class="text-center">状态</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{each list}}
+                    <tr>
+                        <td>{{$value.title}}</td>
+
+
+                        <td>{{$value.relation}}</td>
+
+                        <td>{{$value.link}}</td>
+
+
+                        <td>
+
+
+
+                            {{if $value.position==1}}
+
+                            顶部
+
+                            {{else if $value.position==2}}
+                            中间
+
+                            {{else}}
+                            底部
+                            {{/if}}
+
+
+
+                        </td>
+                        <td>{{if $value.is_opennew==1}}本窗口{{else}}新窗口{{/if}}</td>
+                        <td class="text-center"><span onclick="app.changeNum('Nav','sort',this,{{$value._id}})">{{$value.sort}}</span></td>
+                        <td class="text-center">
+
+                            {{if $value.status==1}}
+                            <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('Nav','status',this,{{$value._id}})" />
+
+                            {{else}}
+                            <img src="/public/admin/images/no.gif" onclick="app.changeStatus('Nav','status',this,{{$value._id}})" />
+                            {{/if}}
+
+                        </td>
+                        <td class="text-center">　<a href="/admin/nav/edit?id={{@$value._id}}">修改</a>　<a class="delete" href="/admin/deleteOne?collection=Nav&id={{@$value._id}}">删除</a></td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+                <div id="page" class="pagination fr"></div>
+            </div>
+<script>
+    $(function () {
+        $('#page').jqPaginator({
+            totalPages: {{pageCount}},
+        visiblePages: 3,
+            currentPage: {{page}},
+        onPageChange: function (num, type) {
+            if(type=='change'){
+                location.href='/admin/nav?page='+num;
+            }
+        }
+    });
+    })
+</script>
+
+
+</body>
+</html>

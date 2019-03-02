@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <meta name="author" content="order by dede58.com"/>
+		<title>小米6立即购买-小米商城</title>
+		{{include './public/header.html'}}
+
+	</head>
+	<body>
+	{{include './public/page_header.html'}}
+
+<!-- start banner_x -->
+	{{include './public/banner.html'}}
+	<!-- xiangqing -->
+
+
+
+	<div class="jieshao mt20 w">
+		<div class="left fl">
+
+
+			<div class="swiper-container">
+				<div class="swiper-wrapper" id="swiper-wrapper">
+					{{each goods_photo_list}}
+					<div class="swiper-slide">
+
+						<img src="{{$value.img_url}}">
+					</div>
+					{{/each}}
+
+				</div>
+
+				<div class="swiper-pagination"></div>
+
+				<!-- Add Arrows -->
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+
+			</div>
+
+
+
+		</div>
+		<div class="right fr">
+			<div class="h3 ml20 mt20">{{goods.title}}</div>
+			<div class="jianjie mr40 ml20 mt10">{{goods.sub_title}}</div>
+			<div class="jiage ml20 mt10">{{goods.shop_price}}元</div>
+			{{if relation_goods.length>0}}
+			<div class="ft20 ml20 mt20">选择版本</div>
+			<div class="xzbb ml20 mt10 clearfix">
+				{{each relation_goods}}
+				<div {{if $value._id.toString() == goods._id.toString() }} class="banben fl active" {{else}} class="banben fl" {{/if}} >
+					<a  href="/products/detail?id={{@$value._id}}">
+						<span> {{$value.goods_version}} </span>
+						<span>{{$value.market_price}}</span>
+					</a>
+				</div>
+				{{/each}}
+			</div>
+			{{/if}}
+
+			{{if goods_color.length>0}}
+			<div class="ft20 ml20 mt20 clear color_div ">选择颜色</div>
+			<div class="xzbb ml20 mt10 clearfix" id="color_list">
+				{{each goods_color}}
+				<div class="banben fl" goods_id="{{@goods._id}}" color_id="{{@$value._id}}">
+					<a>
+						<span class="yuandian" {{if $value.color_value}}  style="background:{{$value.color_value}}" {{/if}}></span>
+						<span class="yanse">{{$value.color_name}}</span>
+					</a>
+				</div>
+					{{/each}}
+			</div>
+				{{/if}}
+		<br>
+			<div class="xqxq mt20 ml20 clear">
+				<div class="top1 mt10">
+					<div class="left1 fl">小米6 全网通版 6GB内存 64GB 亮黑色</div>
+					<div class="right1 fr">2499.00元</div>
+					<div class="clear"></div>
+				</div>
+				<div class="bot mt20 ft20 ftbc">总计：2499元</div>
+			</div>
+			<div class="xiadan ml20 mt20">
+				<input class="jrgwc" type="button" name="jrgwc" value="加入购物车" />
+
+
+
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+
+
+
+
+	<div class="container clearfix">
+
+
+		<div class="c_left">
+
+			<h2>看了又看</h2>
+
+			<div class="item">
+
+				<a target="_blank" href="#">
+
+					<img src="//img10.360buyimg.com/N1/jfs/t24550/324/210570328/559386/cc08975f/5b2910bbNfaceb0b4.jpg" />
+
+					<p class="price recommendLookPrice4183081">￥31.90</p>
+
+					<p>三利 纯棉A类标准简约素雅大浴巾 70×140cm 男女同款 柔软舒适吸水裹身巾 豆绿</p>
+
+				</a>
+
+
+			</div>
+			<div class="item">
+
+				<a target="_blank" href="#">
+
+					<img src="//img10.360buyimg.com/N1/jfs/t24550/324/210570328/559386/cc08975f/5b2910bbNfaceb0b4.jpg" />
+
+					<p class="price recommendLookPrice4183081">￥31.90</p>
+
+					<p>三利 纯棉A类标准简约素雅大浴巾 70×140cm 男女同款 柔软舒适吸水裹身巾 豆绿</p>
+
+				</a>
+
+
+			</div>
+			<div class="item">
+
+				<a target="_blank" href="#">
+
+					<img src="//img10.360buyimg.com/N1/jfs/t24550/324/210570328/559386/cc08975f/5b2910bbNfaceb0b4.jpg" />
+
+					<p class="price recommendLookPrice4183081">￥31.90</p>
+
+					<p>三利 纯棉A类标准简约素雅大浴巾 70×140cm 男女同款 柔软舒适吸水裹身巾 豆绿</p>
+
+				</a>
+
+
+			</div>
+		</div>
+
+
+		<div class="c_right">
+			<ul class="detail_list clearfix">
+
+				<li class="">详情描述</li>
+
+				<li class="">规格参数</li>
+
+				<li class="">用户评价</li>
+			</ul>
+
+
+			<div class="detail_info">
+
+				<div class="detail_info_item">
+
+					{{@goods.goods_content}}
+
+				</div>
+				<div class="detail_info_item">
+					<ul>
+                        {{each attr_list}}
+						<li class="row clearfix">
+
+							<div class="span5">
+
+								<h2>{{@ helper.mark2Html($value.attribute_title)}}</h2>
+							</div>
+
+							<div class="span15">
+
+                                {{@ helper.mark2Html($value.attribute_value)}}
+							</div>
+
+
+						</li>
+                           {{/each}}
+
+
+					</ul>
+				</div>
+
+
+				<div class="detail_info_item">
+					<ul class="comment_list">
+						<li>
+							<div>
+								<img src="//static.i360mall.com/mall/images/eval-stars.png">
+							</div>
+							<p>这已经是第六部了，一如既往地好用。美中不足得是，尾插和数据线的链接口，用过一段时间，就会有充电接触不良的问题，希望厂家将来有改进。</p>
+
+							<p class="eval-order-info"> <span class="eval-time">2018-11-18 14:00:35</span><span>月岩白</span><span>6GB+64GB</span><span></span></p>
+
+						</li>
+						<li>
+							<div>
+								<img src="//static.i360mall.com/mall/images/eval-stars.png">
+							</div>
+							<p>这已经是第六部了，一如既往地好用。美中不足得是，尾插和数据线的链接口，用过一段时间，就会有充电接触不良的问题，希望厂家将来有改进。</p>
+
+							<p class="eval-order-info"> <span class="eval-time">2018-11-18 14:00:35</span><span>月岩白</span><span>6GB+64GB</span><span></span></p>
+
+						</li>
+						<li>
+							<div>
+								<img src="//static.i360mall.com/mall/images/eval-stars.png">
+							</div>
+							<p>这已经是第六部了，一如既往地好用。美中不足得是，尾插和数据线的链接口，用过一段时间，就会有充电接触不良的问题，希望厂家将来有改进。</p>
+
+							<p class="eval-order-info"> <span class="eval-time">2018-11-18 14:00:35</span><span>月岩白</span><span>6GB+64GB</span><span></span></p>
+
+						</li>
+						<li>
+							<div>
+								<img src="//static.i360mall.com/mall/images/eval-stars.png">
+							</div>
+							<p>这已经是第六部了，一如既往地好用。美中不足得是，尾插和数据线的链接口，用过一段时间，就会有充电接触不良的问题，希望厂家将来有改进。</p>
+
+							<p class="eval-order-info"> <span class="eval-time">2018-11-18 14:00:35</span><span>月岩白</span><span>6GB+64GB</span><span></span></p>
+
+						</li>
+					</ul>
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+
+	</div>
+
+
+
+	<!-- footer -->
+	<footer class="mt20 center">
+
+		<div class="mt20">小米商城|MIUI|米聊|多看书城|小米路由器|视频电话|小米天猫店|小米淘宝直营店|小米网盟|小米移动|隐私政策|Select Region</div>
+		<div>©mi.com 京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号</div>
+		<div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>
+
+	</footer>
+
+
+	</body>
+</html>

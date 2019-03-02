@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+        <meta name="author" content="order by dede58.com"/>
+		<title>小米手机列表</title>
+		{{include './public/header.html'}}
+	</head>
+	<body>
+	        {{include './public/page_header.html'}}
+
+
+	<!-- start banner_y -->
+			{{include './public/banner.html'}}
+	<!-- end banner -->
+
+	<!-- start danpin -->
+		<div class="danpin center clearfix">
+			
+			<div class="biaoti center">小米手机</div>
+			<div class="main center ">
+				{{each mobile_list}}
+				{{if $value.status==1}}
+				<div class="mingxing fl mb20" style="border:2px solid #fff;width:230px;cursor:pointer;" onmouseout="this.style.border='2px solid #fff'" onmousemove="this.style.border='2px solid red'">
+					<div class="sub_mingxing"><a href="/products/detail?id={{@$value._id}}" target="_blank"><img src="{{helper.formatImage($value.goods_img,180)}}" alt=""></a></div>
+					<div class="pinpai"><a href="./xiangqing.html" target="_blank">{{$value.title}}</a></div>
+					<div class="youhui">5.16早10点开售</div>
+					<div class="jiage">2499.00元</div>
+				</div>
+				{{/if}}
+				{{/each}}
+
+			</div>
+		</div>
+		
+
+		<footer class="mt20 center">			
+			<div class="mt20">小米商城|MIUI|米聊|多看书城|小米路由器|视频电话|小米天猫店|小米淘宝直营店|小米网盟|小米移动|隐私政策|Select Region</div>
+			<div>©mi.com 京ICP证110507号 京ICP备10046444号 京公网安备11010802020134号 京网文[2014]0059-0009号</div> 
+			<div>违法和不良信息举报电话：185-0130-1238，本网站所列数据，除特殊说明，所有数据均出自我司实验室测试</div>
+
+		</footer>
+
+	<!-- end danpin -->
+
+
+	</body>
+</html>

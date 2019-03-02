@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+    <!-- 符文本编辑器. -->
+    <link href="/public/admin/wysiwyg-editor/css/font-awesome.min.css"
+          rel="stylesheet" type="text/css" />
+    <!-- Include Editor style. -->
+    <link href="/public/admin/wysiwyg-editor/css/froala_editor.pkgd.min.css"
+          rel="stylesheet" type="text/css" />
+    <link href="/public/admin/wysiwyg-editor/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript"src="/public/admin/wysiwyg-editor/js/froala_editor.pkgd.min.js"></script>
+    <script src="/public/admin/wysiwyg-editor/js/zh_cn.js"></script>
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+
+            <div class="panel panel-default">              
+			    <div class="panel-heading">
+                  添加文章
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive input-form">
+                        <form action="/admin/article/doEdit?_csrf={{@csrf}}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="{{@article._id}}">
+                            <input type="hidden" name="pre_page" value="{{pre_page}}">
+                            <div>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#general" role="tab" data-toggle="tab">通用信息</a></li>
+                                    <li role="presentation"><a href="#detail" role="tab" data-toggle="tab">详细描述</a></li>
+
+                                </ul>
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="general">                      <ul class="form_input article_content">
+                                        <li>  <span>文章名称:</span> <input type="text" name="title" class="input" value="{{article.title}}"/></li>
+
+                                        <li>  <span>所属分类:</span>
+                                            <select name="cate_id" id="cate_id">
+                                                <option value="0">顶级分类</option>
+
+                                                {{each list}}
+                                                <option value="{{@$value._id}}" {{if $value._id.toString() == article.cate_id.toString()}} selected {{/if}}>{{$value.title}}</option>
+                                                {{/each}}
+
+                                            </select>
+                                        </li>
+
+                                        <li> <span>封面图片:</span>  <input type="file" name="article_img"/></li>
+                                        <li> <span>原图片:</span>  <img src="{{article.article_img}}" class="pic"></li>
+
+                                        <li>  <span>跳转地址:</span>  <input type="text" name="link" class="input" value="{{article.link}}"/></li>
+
+                                        <li>  <span>Seo关键词: </span><input type="text" name="keywords" class="input" value="{{article.keywords}}"/></li>
+
+                                        <li>  <span>Seo描述:</span> <textarea name="description" id="description" cols="84" rows="4">{{article.description}}</textarea></li>
+
+                                        <li>  <span>排　　序:</span> <input type="text" name="sort" value="{{article.sort}}"/></li>
+
+                                        <li>  <span>状　　态:</span> <input type="radio" name="status"  value="1" id="a" {{if article.status==1}} checked {{/if}}/> <label for="a">显示</label>    <input type="radio" name="status" value="0" id="b" {{if article.status==2}} checked {{/if}}/><label for="b">隐藏</label> 　</li>
+
+
+
+
+
+                                    </ul>
+
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="detail">
+                                        <textarea name="content" id="content" cols="100" rows="8">{{article.content}}</textarea>
+                                    </div>
+
+                                        <br/>
+                                        <button type="submit" class="btn btn-primary">提交</button>
+
+                                </div>
+                            </div>
+
+
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+<script>
+    $(function() {
+        $('#content').froalaEditor({
+            height:300,
+            language: 'zh_cn',
+            //工具栏图标
+            toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', '|', 'fontFamily', 'fontSize', 'color', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink',
+                'insertImage', 'insertVideo', 'embedly', 'insertFile', 'insertTable', '|', 'emoticons', 'specialCharacters', 'insertHR', 'selectAll', 'clearFormatting', '|', 'print', 'spellChecker', 'help', 'html', '|', 'undo', 'redo'],
+            //上传图片的url
+            imageUploadURL: '/admin/goods/uploadImg',
+        });
+    })
+    </script>
+
+
+</body>
+</html>

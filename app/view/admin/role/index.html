@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+
+
+
+
+
+            <!--
+                列表展示
+            -->
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr class="th">
+                        <th>角色名称</th>
+                        <th>描述</th>
+                        <th>增加时间</th>
+                        <th class="text-center">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{each list}}
+                    <tr>
+                        <td>{{$value.title}}</td>
+                        <td>{{$value.description}}</td>
+                        <td>{{helper.formatDate($value.add_time)}}</td>
+                        <td class="text-center"><a href="/admin/role/edit?id={{@ $value._id}}">修改</a>  　<a href="/admin/deleteOne?id={{@ $value._id}}&collection=Role">删除</a>　<a href="/admin/role/author?id={{@ $value._id}}">授权</a></td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+
+
+
+</body>
+</html>

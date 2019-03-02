@@ -1,0 +1,18 @@
+
+<ul class="aside">
+    {{each globalSide}}
+    <li>
+        {{if ($value.checked && $value.type==1)|| (userInfor.is_super==1 && $value.type!=3)}}
+        <h4>{{$value.module_name}}<span class="nav_open"></span></h4>
+        {{each $value.items}}
+        <ul>
+            {{if( $value.checked && $value.type==2)||((userInfor.is_super==1 && $value.type!=3))}}
+            <!--这里的target属性就是可以添加在iframe更新数据-->
+            <li  class="list-group-item"> <a href="{{$value.url}}" target="rightMain">  {{$value.action_name}}</a></li>
+            {{/if}}
+        </ul>
+        {{/each}}
+        {{/if}}
+    </li>
+    {{/each}}
+</ul>

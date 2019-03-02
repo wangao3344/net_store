@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="panel panel-default ">
+    <div class="panel-heading clear">
+        <span>商品分类列表</span><a href="/admin/goodsCate/add" class="btn btn-primary fr">增加商品分类</a>
+    </div>
+    <div class="panel-body">
+        <!--
+            列表展示
+        -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>分类名称</th>
+                    <th>分类图片</th>
+                    <th>排序</th>
+                    <th class="text-center">状态</th>
+
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each list}}
+
+
+                <tr>
+                    <td>---{{$value.title}}</td>
+                    <td>{{if $value.cate_img}}<img src="{{$value.cate_img}}" class="pic">{{/if}}</td>
+                    <td><span class="count" onclick="app.changeNum('GoodsCate','sort',this,{{$value._id}})">{{$value.sort}}</span></td>
+
+                    <td  class="text-center">
+                        {{if $value.status==1}}
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('GoodsCate','status',this,{{$value._id}})" />
+                        {{else}}
+                        <img src="/public/admin/images/no.gif" onclick="app.changeStatus('GoodsCate','status',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+                    <td class="text-center"><a href="/admin/goodsCate/edit?id={{@$value._id}}">修改</a>　<a  class="delete" href="/admin/deleteOne?collection=GoodsCate&id={{@$value._id}}">删除</a>
+                    </td>
+                </tr>
+                {{each $value.items}}
+                <tr>
+                    <td>{{$value.title}}</td>
+                    <td>{{if $value.cate_img}}<img src="{{$value.cate_img}}" class="pic">{{/if}}</td>
+                    <td><span class="count" onclick="app.changeNum('GoodsCate','sort',this,{{$value._id}})">{{$value.sort}}</span></td>
+
+                    <td  class="text-center">
+                        {{if $value.status==1}}
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('GoodsCate','status',this,{{$value._id}})" />
+                        {{else}}
+                        <img src="/public/admin/images/no.gif" onclick="app.changeStatus('GoodsCate','status',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+                    <td class="text-center"><a href="/admin/goodsCate/edit?id={{@$value._id}}">修改</a>　<a  class="delete" href="/admin/deleteOne?collection=GoodsCate&id={{@$value._id}}">删除</a>
+                    </td>
+                </tr>
+
+
+                {{/each}}
+
+
+                {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+    <script type="text/javascript" src="/public/admin/js/jqPaginator.js"></script>
+</head>
+<body>
+<div class="panel panel-default" style="margin-bottom: 10px;margin-top: 10px">
+    <div class="panel-heading">
+        搜索
+    </div>
+
+    <div class="panel-body">
+        <form role="form" class="form-inline" method="get" action="/admin/goods">
+            <div class="form-group">
+                <label for="name">商品名称</label>
+                <input type="text" class="form-control" id="name" placeholder="请输入名称" name="keywords">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">开始搜索</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="panel panel-default ">
+    <div class="panel-heading clear">
+        <span>商品列表</span><a href="/admin/goods/add" class="btn btn-primary fr">增加商品</a>
+    </div>
+
+
+
+
+
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>商品名称</th>
+                    <th>货号</th>
+                    <th>价格</th>
+                    <th>点击量</th>
+                    <th>上架</th>
+                    <th>精品</th>
+                    <th>新品</th>
+                    <th>热销</th>
+                    <th>推荐排序</th>
+                    <th>库存</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each list}}
+                <tr>
+
+                    <td>{{$value.title}}</td>
+                    <td>{{$value.goods_sn}}</td>
+                    <td>{{$value.shop_price}}</td>
+                    <td>{{$value.click_count}}</td>
+
+                    <td>
+
+                        {{if $value.status==1}}
+
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('Goods','status',this,{{$value._id}})" />
+
+                       {{else}}
+                        <img src="/public/admin/images/no.gif"  onclick="app.changeStatus('Goods','status',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+                    <td>
+
+                        {{if $value.is_best==1}}
+
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('Goods','is_best',this,{{$value._id}})" />
+
+                       {{else}}
+                        <img src="/public/admin/images/no.gif"  onclick="app.changeStatus('Goods','is_best',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+                    <td >
+
+                        {{if $value.is_new==1}}
+
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('Goods','is_new',this,{{$value._id}})" />
+
+                        {{else}}
+                        <img src="/public/admin/images/no.gif"  onclick="app.changeStatus('Goods','is_new',this,{{$value._id}}))" />
+                        {{/if}}
+
+                    </td>
+
+                    <td>
+
+                        {{if $value.is_hot==1}}
+
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('Goods','is_hot',this,{{$value._id}})" />
+
+                        {{else}}
+                        <img src="/public/admin/images/no.gif"  onclick="app.changeStatus('Goods','is_hot',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+
+                    <td><span onclick="app.changeNum('Goods','sort',this,{{$value._id}})">{{$value.sort}}</span></td>
+
+
+                    <td><span onclick="app.changeNum('Goods','goods_number',this,{{$value._id}})">{{$value.goods_number}}</span></td>
+
+
+                    <td><a href="/admin/goods/edit?id={{@$value._id}}">修改</a>　<a  class="delete" href="/admin/deleteOne?id={{@$value._id}}&collection=Goods">删除</a></td>
+                </tr>
+                {{/each}}
+
+                </tbody>
+            </table>
+            <div id="page" class="pagination fr"></div>
+        </div>
+    </div>
+</div>
+<script>
+   $(function () {
+       $('#page').jqPaginator({
+           totalPages: {{totalCount}},
+           visiblePages: 3,
+           currentPage: {{page}},
+           onPageChange: function (num, type) {
+               if(type=='change'){
+                   location.href='/admin/goods?page='+num+'&keywords={{keywords}}';
+               }
+           }
+       });
+   })
+</script>
+
+
+</body>
+</html>

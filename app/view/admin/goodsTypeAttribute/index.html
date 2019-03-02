@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="panel panel-default">
+    <div class="panel-heading clear">
+       <span>商品类型属性---{{goods_type.title}}</span> <a href="/admin/goodsTypeAttribute/add?cate_id={{cateId}}" class="btn btn-primary fr">增加商品类型属性</a>
+    </div>
+    <div class="panel-body">
+        <!--
+            列表展示
+        -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>属性名称</th>
+                    <th>商品类型</th>
+                    <th>属性值的录入方式</th>
+                    <th>可选值列表</th>
+                    <th>增加时间</th>
+                    <th class="text-center">状态</th>
+
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each list}}
+                <tr>
+                    <td>{{$value.title}}</td>
+                    <td>{{$value.items[0].title}}</td>
+                    <td>{{if $value.attr_type==1}}单行输入框{{else if $value.attr_type==2}}文本域{{else}}下拉选择框{{/if}}</td>
+                    <td>{{if ! $value.attr_value}}无{{else}}{{ $value.attr_value}} {{/if}}</td>
+                    <td>{{helper.formatDate($value.add_time)}}</td>
+
+                    <td  class="text-center">
+                        {{if $value.status==1}}
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('GoodsTypeAttribute','status',this,{{$value._id}})" />
+                        {{else}}
+                        <img src="/public/admin/images/no.gif" onclick="app.changeStatus('GoodsTypeAttribute','status',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+                    <td class="text-center"><a href="/admin/goodsTypeAttribute/edit?id={{@$value._id}}">修改</a>　<a  class="delete" href="/admin/deleteOne?collection=GoodsTypeAttribute&id={{@$value._id}}">删除</a>
+                    </td>
+                </tr>
+
+
+                {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

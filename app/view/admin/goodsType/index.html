@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="panel panel-default ">
+    <div class="panel-heading clear">
+        <span>商品类型</span><a href="/admin/goodsType/add" class="btn btn-primary fr">增加商品类型</a>
+    </div>
+    <div class="panel-body">
+        <!--
+            列表展示
+        -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr class="th">
+                    <th>商品类型名称</th>
+                    <th>描述</th>
+                    <th>增加时间</th>
+                    <th class="text-center">状态</th>
+
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each list}}
+
+
+                <tr>
+                    <td>{{$value.title}}</td>
+                    <td>{{$value.description}}</td>
+                    <td>{{helper.formatDate($value.add_time)}}</td>
+
+                    <td  class="text-center">
+                        {{if $value.status==1}}
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('GoodsType','status',this,{{$value._id}})" />
+                        {{else}}
+                        <img src="/public/admin/images/no.gif" onclick="app.changeStatus('GoodsType','status',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+                    <td class="text-center"><a href="/admin/goodsTypeAttribute?cate_id={{@$value._id}}">属性列表</a>　<a href="/admin/goodsType/edit?id={{@$value._id}}">修改</a>　<a  class="delete" href="/admin/deleteOne?collection=GoodsType&id={{@$value._id}}">删除</a>
+                    </td>
+                </tr>
+
+
+                {{/each}}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

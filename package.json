@@ -1,0 +1,55 @@
+{
+  "name": "net_store",
+  "version": "1.0.0",
+  "description": "is a shop",
+  "private": true,
+  "egg": {
+    "declarations": true
+  },
+  "dependencies": {
+    "egg": "^2.2.1",
+    "egg-scripts": "^2.11.0",
+    "egg-mongoose": "^3.1.1",
+    "egg-redis": "^2.3.0",
+    "egg-view-arttemplate": "^2.0.2",
+    "jimp": "^0.5.3",
+    "md5": "^2.2.1",
+    "mz-modules": "^2.1.0",
+    "redis": "^2.8.0",
+    "showdown": "^1.9.0",
+    "silly-datetime": "^0.1.2",
+    "svg-captcha": "^1.3.12"
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0",
+    "webstorm-disable-index": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-net_store",
+    "stop": "egg-scripts stop --title=egg-server-net_store",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "8"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "wang ao",
+  "license": "MIT"
+}

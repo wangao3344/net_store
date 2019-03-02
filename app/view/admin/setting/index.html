@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+
+            <div class="panel panel-default">              
+			    <div class="panel-heading">
+                  商店设置
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive input-form">
+                        <form action="/admin/setting/doEdit?_csrf={{@csrf}}" method="post" enctype="multipart/form-data">
+
+                            <ul class="form_input">
+
+                                <li>  <span>网站标题:</span> <input type="text" class="input" name="site_title" value="{{setting.site_title}}"/></li>
+
+                                <li> <span>网站logo:</span>  <input type="file" name="site_logo" />
+                                    <br />
+                                    {{if setting.site_logo}}<span> </span> <img class="pic" src="{{setting.site_logo}}" />{{/if}}
+                                </li>
+
+                                <li>  <span>网站关键词:</span> <input type="text"  class="input" name="site_keywords"  value="{{setting.site_keywords}}"/></li>
+
+                                <li> <span>网站描述:</span>  <textarea name="site_description" style="width:600px;">{{setting.site_description}}</textarea></li>
+
+                                <li> <span>商品默认图片:</span>  <input type="file" name="no_picture" />
+                                    <br />
+                                    {{if setting.no_picture}}<span> </span> <img class="pic" src="{{setting.no_picture}}" />{{/if}}
+
+                                </li>
+                                <li> <span>备案信息:</span> <input type="text" class="input" name="site_icp" value="{{setting.site_icp}}"/></li>
+                                <li> <span>网站电话:</span> <input type="text" class="input" name="site_tel" value="{{setting.site_tel}}"/></li>
+
+                                <li> <span>搜索关键词:</span> <input type="text" class="input" name="search_keywords" value="{{setting.search_keywords}}"/></li>
+
+                                <li> <span>统计代码:</span> <input type="text" class="input" name="tongji_code" value="{{setting.tongji_code}}"/></li>
+
+
+
+
+
+                                <li>
+                                    <br/>
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                </li>
+
+                            </ul>
+
+
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+</body>
+</html>

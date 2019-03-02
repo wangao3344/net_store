@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+
+
+          
+            <div class="panel panel-default">              
+			    <div class="panel-heading">
+                  轮播图列表
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive input-form">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="th">
+                                <th class="text-center">名称</th>
+                                <th class="text-center">分类</th>
+                                <th class="text-center">图片</th>
+                                <th class="text-center">跳转地址</th>
+                                <th>排序</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {{each list}}
+                                <tr>
+                                    <td>{{if $value.type==1}}网站{{else if $value.type==2}}App{{else}}小程序{{/if}}</td>
+                                    <td>{{$value.title}}</td>
+                                    <td><img class="pic" src="{{$value.focus_img}}"></td>
+                                    <td>{{$value.link}}</td>
+                                    <td><span class="count" onclick="app.changeNum('Focus','sort',this,{{$value._id}})">{{$value.sort}}</span></td>
+                                    <td>{{if $value.status==1}}<img src="/public/admin/images/yes.gif" onclick="app.changeStatus('Focus','status',this,{{$value._id}})">{{else}}<img src="/public/admin/images/no.gif" onclick="app.changeStatus('Focus','status',this,{{$value._id}})">{{/if}}
+                                    </td>
+                                    <td><a href="/admin/focus/edit?id={{@$value._id}}">编辑</a>　<a class="delete" href="/admin/deleteOne?id={{@$value._id}}&collection=Focus">删除</a>
+                                    </td>
+
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+</body>
+</html>

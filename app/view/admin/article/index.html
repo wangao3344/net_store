@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    {{include '../public/header.html'}}
+    <script type="text/javascript" src="/public/admin/js/jqPaginator.js"></script>
+</head>
+<body>
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="panel panel-default ">
+    <div class="panel-heading clear">
+        <span>文章列表</span><a href="/admin/article/add" class="btn btn-primary fr">增加文章</a>
+    </div>
+    <div class="panel-body">
+        <!--
+            列表展示
+        -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <th>文章名称</th>
+                <th>文章图片</th>
+                <th>所属分类</th>
+                <th>增加日期</th>
+                <th class="text-center">排序</th>
+                <th class="text-center">状态</th>
+                <th class="text-center">操作</th>
+                </thead>
+                <tbody>
+                {{each list}}
+
+
+                <tr>
+                    <td>{{$value.title}}</td>
+                    <td>{{if $value.article_img}}<img src="{{$value.article_img}}" class="pic">{{/if}}</td>
+                    <td>{{$value.items[0].title}}</td>
+                    <td>{{helper.formatDate($value.add_time)}}</td>
+                    <td><span class="count" onclick="app.changeNum('Article','sort',this,{{$value._id}})">{{$value.sort}}</span></td>
+
+                    <td  class="text-center">
+                        {{if $value.status==1}}
+                        <img src="/public/admin/images/yes.gif" onclick="app.changeStatus('Article','status',this,{{$value._id}})" />
+                        {{else}}
+                        <img src="/public/admin/images/no.gif" onclick="app.changeStatus('Article','status',this,{{$value._id}})" />
+                        {{/if}}
+
+                    </td>
+
+                    <td class="text-center"><a href="/admin/article/edit?id={{@$value._id}}">修改</a>　<a  class="delete" href="/admin/deleteOne?collection=Article&id={{@$value._id}}">删除</a>
+                    </td>
+                </tr>
+
+
+                {{/each}}
+
+                </tbody>
+            </table>
+            <div id="page" class="pagination fr"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#page').jqPaginator({
+            totalPages: {{pageCount}},
+            visiblePages: 3,
+            currentPage:{{page}},
+        onPageChange: function (num, type) {
+            if(type=='change'){
+                location.href='/admin/article?page='+num;
+            }
+        }
+    });
+    })
+</script>
+
+</body>
+</html>
