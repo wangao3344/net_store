@@ -41,7 +41,7 @@ module.exports = appInfo => {
   //mongodb的 插件配置
   config.mongoose = {
     client: {
-      url: 'mongodb://wangao:wa5069369@127.0.0.1/xm_store',
+      url: 'mongodb://wangao:wa5069369@192.168.8.100/xm_store',
       options: {},
     },
   };
