@@ -8,11 +8,12 @@
   },
   "dependencies": {
     "egg": "^2.2.1",
-    "egg-scripts": "^2.11.0",
     "egg-mongoose": "^3.1.1",
     "egg-redis": "^2.3.0",
+    "egg-scripts": "^2.11.0",
     "egg-view-arttemplate": "^2.0.2",
     "jimp": "^0.5.3",
+    "koa-jsonp": "^2.0.2",
     "md5": "^2.2.1",
     "mz-modules": "^2.1.0",
     "redis": "^2.8.0",
